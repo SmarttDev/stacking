@@ -94,7 +94,7 @@ contract Stacking is Ownable {
         token.transfer(msg.sender, _stake);
         stakes[msg.sender] = stakes[msg.sender].sub(_stake);
         if (stakes[msg.sender] == 0) removeStakeholder(msg.sender);
-        rewards[msg.sender] = distributeRewards(msg.sender);
+        rewards[msg.sender] = rewards[msg.sender].add(distributeRewards(msg.sender, _stake));
         // _mint(msg.sender, _stake);
     }
 
@@ -121,18 +121,18 @@ contract Stacking is Ownable {
         return _totalRewards;
     }
 
-    function calculateReward(address _stakeholder)
+    function calculateReward(uint256 _stake)
         public
         view
         returns (uint256)
     {
-        return stakes[_stakeholder].div(100);
+        return _stake.div(100);
     }
 
-    function distributeRewards(address _holder) public onlyOwner {
+    function distributeRewards(address _holder, uint256 _stake) public onlyOwner {
         //for (uint256 s = 0; s < stakeholders.length; s = s + 1) {
         //    address stakeholder = stakeholders[s];
-            uint256 reward = calculateReward(_holder);
+            uint256 reward = calculateReward(_stake);
             rewards[_holder] = rewards[_holder].add(reward);
             //isDistribute = true;
         //}
