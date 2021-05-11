@@ -7,9 +7,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
 import "./Dai.sol";
 
-/**
- * @title Staking Contract "Défi : Staking"
- */
 
 contract Stacking is Ownable {
     using SafeMath for uint256;
@@ -19,7 +16,10 @@ contract Stacking is Ownable {
     mapping(address => uint256) internal rewards;
     Dai token;
 
-    //address blabla;
+    /**
+     * @title Staking our Token ERC20 Dai 
+     * @notice Implements a basic ERC20 staking token with incentive distribution.
+   */
 
     constructor(address _tokenAddress) {
         priceFeed = AggregatorV3Interface(
